@@ -1,5 +1,6 @@
 module.exports = {
     User: require("./user"),
-    Adventure: require("./adventure")
+    Adventure: require("./adventure"),
+    Review: require("./review")
   };
   
