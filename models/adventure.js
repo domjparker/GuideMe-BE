@@ -52,6 +52,9 @@ const adventureSchema = new Schema({
     },
     imageId:{
         type:Number
+    },
+    tags:{
+        type:Array
     }
 });
 
