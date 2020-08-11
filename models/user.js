@@ -11,7 +11,9 @@ const userSchema = new Schema({
   veriifed:{type:Boolean, default: false},
   host: {type:Boolean, default: false},
   hostedAdventures: {type:Array},
-  completedAdventures: {type:Array}
+  completedAdventures: {type:Array},
+  profilePicture: { data: Buffer, contentType: String },
+  bannerPicture: { data: Buffer, contentType: String }
 });
 
 const User = mongoose.model("User", userSchema);
