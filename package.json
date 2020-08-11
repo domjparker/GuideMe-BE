@@ -17,5 +17,9 @@
   "bugs": {
     "url": "https://github.com/domjparker/GuideMe-BE/issues"
   },
-  "homepage": "https://github.com/domjparker/GuideMe-BE#readme"
+  "homepage": "https://github.com/domjparker/GuideMe-BE#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^5.9.28"
+  }
 }
