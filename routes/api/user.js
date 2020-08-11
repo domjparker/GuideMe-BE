@@ -1,5 +1,5 @@
 const router = require("express").Router();
-// need to require model;
+const userController = require("../../controllers/")
 
 // then make routes to that model
 
