@@ -13,7 +13,10 @@ const userSchema = new Schema({
   hostedAdventures: {type:Array},
   completedAdventures: {type:Array},
   profilePicture: { data: Buffer, contentType: String },
-  bannerPicture: { data: Buffer, contentType: String }
+  bannerPicture: { data: Buffer, contentType: String },
+  tags:{
+      type:Array
+  }
 });
 
 const User = mongoose.model("User", userSchema);
