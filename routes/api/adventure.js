@@ -1,11 +1,15 @@
 const router = require("express").Router();
-const adventureController = require("../../controllers/")
+const adventureController = require("../../controllers/adventureController");
 
-// then make routes to that model
+// Matches with "/api/adventure"
+router.route("/")
+  .get(adventureController.findAll)
+  .post(adventureController.create);
 
-
-
-
-
-
+router
+  .route("/:id")
+  .get(adventureController.findById)
+  .put(adventureController.update)
+  .delete(adventureController.remove);
+  
 module.exports = router;
