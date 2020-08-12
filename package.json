@@ -20,6 +20,7 @@
   "homepage": "https://github.com/domjparker/GuideMe-BE#readme",
   "dependencies": {
     "express": "^4.17.1",
-    "mongoose": "^5.9.28"
+    "mongoose": "^5.9.28",
+    "morgan": "^1.10.0"
   }
 }

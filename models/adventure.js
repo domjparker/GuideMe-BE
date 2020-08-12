@@ -12,12 +12,12 @@ const adventureSchema = new Schema({
         length: String,
         required: true
     },
-    difficulty: {type: String, required:true},
-    minGroupSize: {type: Number, required:true},
-    maxGroupSize: {type: Number, required:true},
-    price:{type:Number, required: true},
-    gearList:{type:String},
-    imageId:{type:Number}
+    difficulty: { type: String, required: true },
+    minGroupSize: { type: Number, required: true },
+    maxGroupSize: { type: Number, required: true },
+    price: { type: Number, required: true },
+    gearList: { type: String },
+    imageId: { type: Number }
 });
 
 const Adventure = mongoose.model("Adventure", adventureSchema);
