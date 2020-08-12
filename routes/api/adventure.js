@@ -11,5 +11,9 @@ router
   .get(adventureController.findById)
   .put(adventureController.update)
   .delete(adventureController.remove);
+router
+  .route("/location/:location")
+  .get(adventureController.findLocation);
+
   
 module.exports = router;
