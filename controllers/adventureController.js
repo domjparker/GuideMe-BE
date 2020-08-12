@@ -8,6 +8,13 @@ module.exports = {
             .then(dbModel => res.json(dbModel))
             .catch(err => res.status(422).json(err));
     },
+    findLocation: function (req, res) {
+        db.Adventure
+            .find({location:req.params.location})
+            .populate('hostId')
+            .then(dbModel => res.json(dbModel))
+            .catch(err => res.status(422).json(err));
+    },
     findById: function (req, res) {
         db.Adventure
             .findById(req.params.id)
