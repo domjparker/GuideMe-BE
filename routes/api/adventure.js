@@ -14,6 +14,8 @@ router
 router
   .route("/location/:location")
   .get(adventureController.findLocation);
-
+router
+  .route("/tags/:tag")
+  .get(adventureController.findTag)
   
 module.exports = router;
