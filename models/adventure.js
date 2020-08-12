@@ -30,9 +30,8 @@ const adventureSchema = new Schema({
         required: true
     },
     duration: {
-        number: Number,
-        unit: String,
-        required: true
+        time:{type: Number, required:true},
+        unit:{type: String, required:true}    
     },
     difficulty: {
         type: String,
