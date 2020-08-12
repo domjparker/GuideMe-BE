@@ -10,13 +10,26 @@ const userSchema = new Schema({
   location:{type: String},
   veriifed:{type:Boolean, default: false},
   host: {type:Boolean, default: false},
-  hostedAdventures: {type:Array},
-  completedAdventures: {type:Array},
+  hostedAdventures: [
+    {
+        type: Schema.Types.ObjectId,
+        ref: "Adventure"
+    }
+],
+  completedAdventures: [
+    {
+        type: Schema.Types.ObjectId,
+        ref: "Adventure"
+    }
+],
   profilePicture: { data: Buffer, contentType: String },
   bannerPicture: { data: Buffer, contentType: String },
-  tags:{
-      type:Array
-  }
+  tags:[
+    {
+        type: Schema.Types.ObjectId,
+        ref: "Tag"
+    }
+]
 });
 
 const User = mongoose.model("User", userSchema);

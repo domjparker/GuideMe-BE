@@ -2,60 +2,65 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const adventureSchema = new Schema({
-    adventureName: { 
-        type: String, 
-        required: true 
+    adventureName: {
+        type: String,
+        required: true
     },
     hostId: {
         type: Schema.Types.ObjectId,
         ref: "User",
         required: true
-      },
-    usersOnAdventure: {
-        type: Array
     },
-    description: { 
-        type: String, 
-        required: true 
+    usersOnAdventure: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: "User"
+        }
+    ],
+    description: {
+        type: String,
+        required: true
     },
-    location: { 
-        type: String, 
-        required: true 
+    location: {
+        type: String,
+        required: true
     },
-    itinerary: { 
-        type: String, 
-        required: true 
+    itinerary: {
+        type: String,
+        required: true
     },
     duration: {
-        number: Number,
-        length: String,
-        required: true
+        time:{type: Number, required:true},
+        unit:{type: String, required:true}    
     },
     difficulty: {
-        type: String, 
-        required:true
-    },
-    minGroupSize: {
-        type: Number, 
-        required:true
-    },
-    maxGroupSize: {
-        type: Number, 
-        required:true
-    },
-    price:{
-        type:Number, 
+        type: String,
         required: true
     },
-    gearList:{
-        type:String
+    minGroupSize: {
+        type: Number,
+        required: true
     },
-    imageId:{
-        type:Number
+    maxGroupSize: {
+        type: Number,
+        required: true
     },
-    tags:{
-        type:Array
-    }
+    price: {
+        type: Number,
+        required: true
+    },
+    gearList: {
+        type: String
+    },
+    imageId: {
+        type: Number
+    },
+    tags: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: "Tag"
+        }
+    ]
 });
 
 const Adventure = mongoose.model("Adventure", adventureSchema);
