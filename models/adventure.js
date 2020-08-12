@@ -45,14 +45,6 @@ const adventureSchema = new Schema({
         type: Number,
         required: true
     },
-<<<<<<< HEAD
-    difficulty: { type: String, required: true },
-    minGroupSize: { type: Number, required: true },
-    maxGroupSize: { type: Number, required: true },
-    price: { type: Number, required: true },
-    gearList: { type: String },
-    imageId: { type: Number }
-=======
     price: {
         type: Number,
         required: true
@@ -69,7 +61,6 @@ const adventureSchema = new Schema({
             ref: "Tag"
         }
     ]
->>>>>>> dev
 });
 
 const Adventure = mongoose.model("Adventure", adventureSchema);

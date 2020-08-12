@@ -1,10 +1,6 @@
 const db = require("../models")
 
 module.exports = {
-<<<<<<< HEAD
-    
-};
-=======
     findAll: function (req, res) {
         db.Adventure
             .find(req.query)
@@ -39,4 +35,3 @@ module.exports = {
             .catch(err => res.status(422).json(err));
     }
 }
->>>>>>> dev
