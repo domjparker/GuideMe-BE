@@ -8,7 +8,7 @@ const userSchema = new Schema({
   password: { type: String,  required: true },
   bio: {type:String},
   location:{type: String},
-  veriifed:{type:Boolean, default: false},
+  verified:{type:Boolean, default: false},
   host: {type:Boolean, default: false},
   hostedAdventures: [
     {

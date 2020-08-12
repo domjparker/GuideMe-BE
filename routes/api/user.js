@@ -1,11 +1,15 @@
 const router = require("express").Router();
-// need to require model;
+const userController = require("../../controllers/")
 
-// then make routes to that model
+// matches with "/api/user"
+router.route("/")
+    .post(userController.create);
 
-
-
-
+// matches with "/api/user/:id"
+router.route("/:id")
+    .get(UserController.findById)
+    .put(UserController.update)
+    .delete(UserController.remove);
 
 
 module.exports = router;
