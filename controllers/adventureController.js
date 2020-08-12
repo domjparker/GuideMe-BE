@@ -1,10 +1,19 @@
 const db = require("../models")
+var mongoose = require('mongoose')
 
 module.exports = {
     findAll: function (req, res) {
         db.Adventure
             .find(req.query)
             .populate('hostId')
+            .then(dbModel => res.json(dbModel))
+            .catch(err => res.status(422).json(err));
+    },
+    findTag: function (req, res) {
+        db.Adventure
+            .find({ tags: { $in: ["5f34621533e8d50b0c680ffc"] } })
+            .populate('hostId')
+            .populate('tags')
             .then(dbModel => res.json(dbModel))
             .catch(err => res.status(422).json(err));
     },
