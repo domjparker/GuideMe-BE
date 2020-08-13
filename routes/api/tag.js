@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const tagController = require("../../controllers/tagController")
 
-// matches with "/api/user"
+// matches with "/api/tag"
 router.route("/")
     .post(tagController.create);
 
