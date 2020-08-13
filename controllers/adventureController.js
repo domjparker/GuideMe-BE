@@ -11,7 +11,7 @@ module.exports = {
     },
     findTag: function (req, res) {
         db.Adventure
-            .find({ tags: { $in: ["5f34621533e8d50b0c680ffc"] } })
+            .find({ tags: { $in: [req.params.tag] } })
             .populate('hostId')
             .populate('tags')
             .then(dbModel => res.json(dbModel))
@@ -19,7 +19,7 @@ module.exports = {
     },
     findLocation: function (req, res) {
         db.Adventure
-            .find({location:req.params.location})
+            .find({ location: req.params.location })
             .populate('hostId')
             .then(dbModel => res.json(dbModel))
             .catch(err => res.status(422).json(err));
@@ -33,7 +33,7 @@ module.exports = {
     },
     findByHostId: function (req, res) {
         db.Adventure
-            .find({hostId: req.params.id})
+            .find({ hostId: req.params.id })
             .populate('hostId')
             .then(dbModel => res.json(dbModel))
             .catch(err => res.status(422).json(err));
@@ -45,8 +45,13 @@ module.exports = {
             .catch(err => res.status(422).json(err));
     },
     update: function (req, res) {
+        const queryObj = req.body
+        const tags = req.body.tags
+        delete queryObj.tags
         db.Adventure
-            .findOneAndUpdate({ _id: req.params.id }, req.body)
+            .findOneAndUpdate({ _id: req.params.id }, queryObj)
+            .findOneAndUpdate({ _id: req.params.id }, { $push: { tags: [tags] } })
+            .populate('tags', 'tagName')
             .then(dbModel => res.json(dbModel))
             .catch(err => res.status(422).json(err));
     },
