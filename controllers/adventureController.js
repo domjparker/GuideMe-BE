@@ -48,12 +48,21 @@ module.exports = {
         const queryObj = req.body
         const tags = req.body.tags
         delete queryObj.tags
-        db.Adventure
+        if(tags){
+            db.Adventure
             .findOneAndUpdate({ _id: req.params.id }, queryObj)
             .findOneAndUpdate({ _id: req.params.id }, { $push: { tags: [tags] } })
             .populate('tags', 'tagName')
             .then(dbModel => res.json(dbModel))
             .catch(err => res.status(422).json(err));
+        }else{
+            db.Adventure
+            .findOneAndUpdate({ _id: req.params.id }, queryObj)
+            .populate('tags', 'tagName')
+            .then(dbModel => res.json(dbModel))
+            .catch(err => res.status(422).json(err));
+        }
+        
     },
     remove: function (req, res) {
         db.Adventure

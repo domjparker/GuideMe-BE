@@ -8,7 +8,6 @@ router.route("/")
 // matches with "/api/tag/:id"
 router.route("/:id")
     .get(tagController.findById)
-    .put(tagController.update)
     .delete(tagController.remove);
 
 
