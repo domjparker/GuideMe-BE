@@ -6,6 +6,7 @@ module.exports = {
         db.Adventure
             .find(req.query)
             .populate('hostId')
+            .populate('tags', 'tagName')
             .then(dbModel => res.json(dbModel))
             .catch(err => res.status(422).json(err));
     },
@@ -13,7 +14,7 @@ module.exports = {
         db.Adventure
             .find({ tags: { $in: [req.params.tag] } })
             .populate('hostId')
-            .populate('tags')
+            .populate('tags', 'tagName')
             .then(dbModel => res.json(dbModel))
             .catch(err => res.status(422).json(err));
     },
