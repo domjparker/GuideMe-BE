@@ -17,5 +17,8 @@ router
 router
   .route("/tags/:tag")
   .get(adventureController.findTag)
+  router
+  .route("/host/:id")
+  .get(adventureController.findByHostId)
   
 module.exports = router;
