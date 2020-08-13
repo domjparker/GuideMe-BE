@@ -57,7 +57,7 @@ db.User
 const adventureSeed = [
   {
       "adventureName": "Adventure 1",
-      "hostId": "1",
+      "hostId": "15f35a5080550a70bc8047484",
       "usersOnAdventure":[],
       "description":"This is a super cool first ever best ever adventure that takes you far and wide to Neverland",
       "location": "Seattle,WA",
@@ -76,7 +76,7 @@ const adventureSeed = [
   },
   {
       "adventureName": "Adventure 2",
-      "hostId": "2",
+      "hostId": "5f35a5080550a70bc8047484",
       "usersOnAdventure":[],
       "description":"This is a super cool first ever best ever adventure that takes you far and wide to Neverland",
       "location": "Seattle,WA",
@@ -95,7 +95,7 @@ const adventureSeed = [
   },
   {
       "adventureName": "Adventure 3",
-      "hostId": "3",
+      "hostId": "5f35a5080550a70bc8047484",
       "usersOnAdventure":[],
       "description":"This is a super cool first ever best ever adventure that takes you far and wide to Neverland",
       "location": "Seattle,WA",
