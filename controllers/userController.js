@@ -41,14 +41,10 @@ module.exports = {
     },
 
     update: function (req, res) {
-        // TODO: this needs to be checked. remove TODO when checked.
         db.User.findOneAndUpdate({ _id: req.params.id }, {
             bio: req.body.bio,
             location: req.body.location,
-            profilePicture: req.body.profile.Picture,
-            bannerPicture: req.body.bannerPicture,
             tags: req.body.tags,
-            host: req.body.host
         })
             .then(dbModel => res.json(dbModel))
             .catch(err => res.status(422).json(err));
