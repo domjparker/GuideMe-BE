@@ -56,7 +56,6 @@ db.User
 
 const adventureSeed = [
   {
-      "_id": "laksjdf",
       "adventureName": "Adventure 1",
       "hostId": "1",
       "usersOnAdventure":[],
@@ -76,7 +75,6 @@ const adventureSeed = [
       "tags":["hiking"]
   },
   {
-      "_id": "alskdjf",
       "adventureName": "Adventure 2",
       "hostId": "2",
       "usersOnAdventure":[],
@@ -96,7 +94,6 @@ const adventureSeed = [
       "tags":["hiking"]
   },
   {
-      "_id": "aöskjdfölkajsf",
       "adventureName": "Adventure 3",
       "hostId": "3",
       "usersOnAdventure":[],
