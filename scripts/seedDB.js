@@ -57,7 +57,7 @@ db.User
 const adventureSeed = [
   {
       "adventureName": "Adventure 1",
-      "hostId": "15f35a5080550a70bc8047484",
+      "hostId": "5f35a5080550a70bc8047484",
       "usersOnAdventure":[],
       "description":"This is a super cool first ever best ever adventure that takes you far and wide to Neverland",
       "location": "Seattle,WA",
@@ -72,7 +72,6 @@ const adventureSeed = [
       "price":1000,
       "gearList":"shoes, clothes, smile",
       "imageId":"https://images.pexels.com/photos/1525041/pexels-photo-1525041.jpeg?cs=srgb&dl=pexels-francesco-ungaro-1525041.jpg&fm=jpg",
-      "tags":["hiking"]
   },
   {
       "adventureName": "Adventure 2",
@@ -91,7 +90,6 @@ const adventureSeed = [
       "price":1000,
       "gearList":"shoes, clothes, smile",
       "imageId":"https://images.pexels.com/photos/1497585/pexels-photo-1497585.jpeg?cs=srgb&dl=pexels-spencer-gurley-1497585.jpg&fm=jpg",
-      "tags":["hiking"]
   },
   {
       "adventureName": "Adventure 3",
@@ -110,7 +108,6 @@ const adventureSeed = [
       "price":1000,
       "gearList":"shoes, clothes, smile",
       "imageId":"https://images.pexels.com/photos/258045/pexels-photo-258045.jpeg?cs=srgb&dl=pexels-pixabay-258045.jpg&fm=jpg",
-      "tags":["hiking"]
   }
 ]
 
