@@ -5,18 +5,18 @@ const { User } = require("../models");
 module.exports = {
     // get request to get user info by _id
     findBySessionId: function (req, res) {
-        db.User.findOne({_id: req.session.user.id})
+        db.User.findOne({ _id: req.session.user.id })
             .populate('tags')
             .then(dbModel => res.json(dbModel))
             .catch(err => res.status(500).json(err));
     },
     // post request to create a user upon signup
-    signup: function async (req, res) {
+    signup: function async(req, res) {
         db.User.create({
             firstName: req.body.firstName,
             lastName: req.body.lastName,
             email: req.body.email,
-            password: bcrypt.hashSync(req.body.password,bcrypt.genSaltSync(10),null)
+            password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null)
         }).then(dbModel => {
             res.json(dbModel)
             res.status(204).end();
@@ -36,7 +36,6 @@ module.exports = {
                         id: data._id,
                         email: data.email
                     }
-                    console.log(req.session.user)
                     res.send("session login successful");
                 } else {
                     res.status(401).send("wrong password")
@@ -46,7 +45,9 @@ module.exports = {
             return res.status(500).end();
         });
     },
-
+    getSession: function (req, res) {
+        res.json(req.session.user)
+    },
     logout: function (req, res) {
         req.session.destroy()
         console.log("User is logged out")
@@ -69,6 +70,9 @@ module.exports = {
         db.User.findById({ _id: req.session.user.id })
             .then(dbModel => dbModel.remove())
             .then(dbModel => res.json(dbModel))
+            .catch(err => res.status(422).json(err));
+        db.Adventure.deleteMany({ hostId: req.session.user.id })
+            .then(()=> console.log("deleted"))
             .catch(err => res.status(422).json(err));
     },
 };
