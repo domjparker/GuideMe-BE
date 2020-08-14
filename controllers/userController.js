@@ -12,7 +12,7 @@ module.exports = {
             firstName: req.body.firstName,
             lastName: req.body.lastName,
             email: req.body.email,
-            password: req.body.password
+            password: bcrypt.hashSync(req.body.password,bcrypt.genSaltSync(10),null)
         }).then(dbModel => res.json(dbModel.id))
             .catch(err => res.status(422).json(err));
     },
@@ -24,12 +24,7 @@ module.exports = {
             if (!data) {
                 return res.status(404).send('no such user')
             } else {
-                if (bcrypt, bcrypt.compareSync(req.body.password === user.password)) {
-                    req.session.user = {
-                        _id: data._id,
-                        email: data.email
-                    }
-                    console.log(req.session.user)
+                if (bcrypt.compareSync(req.body.password, data.password)) {
                     res.send("login successful");
                 } else {
                     res.status(401).send("wrong password")
