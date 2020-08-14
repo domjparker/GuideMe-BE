@@ -1,20 +1,25 @@
 const db = require("../models")
-const bcrypt = require("bcrypt")
+const bcrypt = require("bcrypt");
+const { User } = require("../models/user");
 
 module.exports = {
+    // get user info by ID
     findById: function (req, res) {
-        db.User.findById(req.params.id)
+        db.User.findOne(req.params.id)
             .then(dbModel => res.json(dbModel))
-            .catch(err => res.status(422).json(err));
+            .catch(err => res.status(500).json(err));
     },
-    signup: function (req, res) {
+    // create a user upon signup
+    signup: function async (req, res) {
         db.User.create({
             firstName: req.body.firstName,
             lastName: req.body.lastName,
             email: req.body.email,
-            password: req.body.password
-        }).then(dbModel => res.json(dbModel.id))
-            .catch(err => res.status(422).json(err));
+            password: bcrypt.hashSync(req.body.password,bcrypt.genSaltSync(10),null)
+        }).then(dbModel => {
+            res.json(dbModel)
+            res.status(204).end();
+        }).catch(err => res.status(500).json(err));
     },
 
     login: function (req, res) {
@@ -24,12 +29,12 @@ module.exports = {
             if (!data) {
                 return res.status(404).send('no such user')
             } else {
-                if (bcrypt, bcrypt.compareSync(req.body.password === user.password)) {
-                    req.session.user = {
-                        _id: data._id,
-                        email: data.email
-                    }
-                    console.log(req.session.user)
+                if (bcrypt, bcrypt.compareSync(req.body.password, data.password)) {
+                    // req.session.user = {
+                    //     _id: data._id,
+                    //     email: data.email
+                    // }
+                    // console.log(req.session.user)
                     res.send("login successful");
                 } else {
                     res.status(401).send("wrong password")
@@ -41,14 +46,10 @@ module.exports = {
     },
 
     update: function (req, res) {
-        // TODO: this needs to be checked. remove TODO when checked.
         db.User.findOneAndUpdate({ _id: req.params.id }, {
             bio: req.body.bio,
             location: req.body.location,
-            profilePicture: req.body.profile.Picture,
-            bannerPicture: req.body.bannerPicture,
             tags: req.body.tags,
-            host: req.body.host
         })
             .then(dbModel => res.json(dbModel))
             .catch(err => res.status(422).json(err));
