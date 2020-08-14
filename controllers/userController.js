@@ -36,7 +36,6 @@ module.exports = {
                         id: data._id,
                         email: data.email
                     }
-                    console.log(req.session.user)
                     res.send("session login successful");
                 } else {
                     res.status(401).send("wrong password")
@@ -46,7 +45,9 @@ module.exports = {
             return res.status(500).end();
         });
     },
-
+    getSession: function (req, res) {
+        res.json(req.session.user)
+    },
     logout: function (req, res) {
         req.session.destroy()
         console.log("User is logged out")

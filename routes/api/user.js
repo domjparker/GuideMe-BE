@@ -17,5 +17,6 @@ router.route("/profile")
     .get(userController.findBySessionId)
     .put(userController.update)
     .delete(userController.remove);
-
+router.route("/getLoggedInUser")
+    .get(userController.getSession)
 module.exports = router;
