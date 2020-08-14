@@ -6,6 +6,7 @@ module.exports = {
     // get request to get user info by _id
     findBySessionId: function (req, res) {
         db.User.findOne({_id: req.session.user.id})
+            .populate('tags')
             .then(dbModel => res.json(dbModel))
             .catch(err => res.status(500).json(err));
     },
@@ -47,7 +48,7 @@ module.exports = {
     },
 
     logout: function (req, res) {
-        req.session.destroy();
+        req.session.destroy()
         console.log("User is logged out")
         // TODO: needs a redirect if inside user profile, etc.
     },
