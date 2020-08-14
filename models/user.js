@@ -6,7 +6,7 @@ const userSchema = new Schema({
   lastName: { type: String, required: true },
   email: { type: String, match: [/.+@.+\..+/, "Please enter a valid e-mail address"], required: true },
   password: { type: String,  required: true },
-  bio: {type:String},
+  bio: {type: String},
   location:{type: String},
   verified:{type:Boolean, default: false},
   host: {type:Boolean, default: false},

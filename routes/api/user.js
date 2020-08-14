@@ -9,13 +9,13 @@ router.route("/signup")
 router.route("/login")
     .post(userController.login);
 
+router.route("/logout")
+    .post(userController.logout);
+
 // matches with "/api/user/:id"
-router.route("/:id")
-    .get(userController.findById)
+router.route("/profile")
+    .get(userController.findBySessionId)
     .put(userController.update)
     .delete(userController.remove);
-
-
-
 
 module.exports = router;
