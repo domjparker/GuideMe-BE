@@ -1,12 +1,12 @@
 // * Server Setup
-
 // Dependencies
 const express = require("express");
 const cors=require('cors');
-// const session = require("express-session")
+const session = require("express-session")
 const logger = require("morgan");
 const mongoose = require("mongoose");
 const routes = require("./routes");
+const { MemoryStore } = require("express-session");
 
 // Express App Setup
 const app = express();
@@ -21,13 +21,16 @@ app.use(express.json());
 app.use(cors({
   origin:["http://localhost:3000"],
   credentials:true
-}))
+}));
 
 // Session Setup
-// app.use(session({
-//   secret: "dimma stealth",
-
-// }))
+app.use(session({
+  secret: "dimma stealth",
+  resave: false,
+  saveUninitialized: true,
+  cookie: {maxAge: 7200000},
+  store: new MemoryStore({checkPeriod: 7200000})
+}))
 
 // Connects with MongoDB via Mongoose
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/guideme", {
