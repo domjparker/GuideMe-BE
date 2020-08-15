@@ -1,9 +1,9 @@
 const db = require("../models")
 
 module.exports = {
-    findByUser: function(req,res) {
+    findSentMessage: function(req,res) {
         db.Messages
-        .find({$or: [{senderId:req.params.id}, {recieverId:req.params.id}]})
+        .find({$and: [{senderId:req.session.user.id}, {recieverId:req.params.id}]})
         .populate('senderId')
         .populate('recieverId')
         .then(dbModel => res.json(dbModel))
