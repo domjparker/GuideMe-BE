@@ -12,7 +12,7 @@ router.route("/login")
 router.route("/logout")
     .post(userController.logout);
 
-// matches with "/api/user/:id"
+// matches with "/api/user/profile"
 router.route("/profile")
     .get(userController.findBySessionId)
     .put(userController.update)
