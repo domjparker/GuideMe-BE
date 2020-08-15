@@ -24,4 +24,5 @@ router
   .route("/host/:id")
   .get(adventureController.findByHostId)
 
+
 module.exports = router;

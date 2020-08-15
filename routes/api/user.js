@@ -15,7 +15,7 @@ router.route("/logout")
 // matches with "/api/user/:id"
 router.route("/profile")
     .get(userController.findBySessionId)
-    .put(userController.update)
+    .put(userController.updatePicture)
     .delete(userController.remove);
 
 module.exports = router;

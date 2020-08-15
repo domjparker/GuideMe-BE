@@ -22,7 +22,8 @@ const userSchema = new Schema({
         ref: "Adventure"
     }
 ],
-  profilePicture: { data: Buffer, contentType: String },
+  // url for cloudinary
+  profilePictureUrl: { type: String },
   bannerPicture: { data: Buffer, contentType: String },
   tags:[
     {

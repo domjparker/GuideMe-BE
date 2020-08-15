@@ -56,7 +56,17 @@ module.exports = {
     update: function (req, res) {
         db.User.findOneAndUpdate({ _id: req.session.user.id }, {
             bio: req.body.bio,
-            location: req.body.location
+            location: req.body.location,
+            profilePictureUrl: req.body.profilePictureUrl
+            // tags: req.body.tags,
+        })
+            .then(dbModel => res.json(dbModel))
+            .catch(err => res.status(422).json(err));
+    },
+
+    updatePicture: function (req, res) {
+        db.User.findOneAndUpdate({ _id: req.session.user.id }, {
+            profilePictureUrl: req.body.profilePictureUrl
             // tags: req.body.tags,
         })
             .then(dbModel => res.json(dbModel))
@@ -71,3 +81,6 @@ module.exports = {
             .catch(err => res.status(422).json(err));
     },
 };
+
+
+

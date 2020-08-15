@@ -1,7 +1,7 @@
 // * Server Setup
 // Dependencies
 const express = require("express");
-const cors=require('cors');
+const cors = require('cors');
 const session = require("express-session")
 const logger = require("morgan");
 const mongoose = require("mongoose");
