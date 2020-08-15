@@ -17,5 +17,7 @@ router.route("/profile")
     .get(userController.findBySessionId)
     .put(userController.updatePicture)
     .delete(userController.remove);
-
+    // matches with "/api/user/getSession
+router.route("/getSession")
+    .get(userController.getSession)
 module.exports = router;
