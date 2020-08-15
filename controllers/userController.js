@@ -56,12 +56,7 @@ module.exports = {
 
     // put request to update user bio and location
     update: function (req, res) {
-        db.User.findOneAndUpdate({ _id: req.session.user.id }, {
-            bio: req.body.bio,
-            location: req.body.location,
-            profilePictureUrl: req.body.profilePictureUrl
-            // tags: req.body.tags,
-        })
+        db.User.findOneAndUpdate({ _id: req.session.user.id }, req.body)
             .then(dbModel => res.json(dbModel))
             .catch(err => res.status(422).json(err));
     },
