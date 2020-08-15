@@ -11,12 +11,6 @@ const adventureSchema = new Schema({
         ref: "User",
         required: true
     },
-    usersOnAdventure: [
-        {
-            type: Schema.Types.ObjectId,
-            ref: "User"
-        }
-    ],
     description: {
         type: String,
         required: true

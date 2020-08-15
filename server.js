@@ -42,6 +42,18 @@ mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/guideme", {
 app.use(routes);
 
 // Starts Express Server
-app.listen(PORT, () => {
+var server = app.listen(PORT, () => {
   console.log(`App running on port ${PORT}!`);
 });
+//Socket.io Setup
+var io = require('socket.io')(server);
+//Listens for incoming connections from Client.
+io.on('connection', function (socket) {
+  console.log('Client connected...')
+  socket.on('send-chat-message', data => {
+    io.to(data.recipient).emit('chat-message', data.user + ": " + data.message)
+  })
+  socket.on('disconnect', ()=>{
+    console.log("User Disconnected")
+  })
+})
