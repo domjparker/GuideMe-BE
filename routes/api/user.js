@@ -13,10 +13,13 @@ router.route("/logout")
     .post(userController.logout);
 
 // matches with "/api/user/profile"
-router.route("/profile")
+router.route("/profile/")
     .get(userController.findBySessionId)
-    .put(userController.updatePicture)
+    .put(userController.update)
     .delete(userController.remove);
+// matches with "/api/user/profile"
+router.route("/profile/picture")
+    .put(userController.updatePicture)
     // matches with "/api/user/getSession
 router.route("/getSession")
     .get(userController.getSession)
