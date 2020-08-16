@@ -1,5 +1,6 @@
 const router = require("express").Router();
-const userController = require("../../controllers/userController")
+const userController = require("../../controllers/userController");
+const { route } = require("./adventure");
 
 // matches with "/api/user/signup"
 router.route("/signup")
@@ -20,7 +21,11 @@ router.route("/profile/")
 // matches with "/api/user/profile"
 router.route("/profile/picture")
     .put(userController.updatePicture)
-    // matches with "/api/user/getSession
+// matches with "/api/user/getSession
 router.route("/getSession")
     .get(userController.getSession)
+// matches with "/api/user/mailbox
+router.route("/mailbox")
+    .get(userController.getMailbox)
+    .put(userController.updateMailbox)
 module.exports = router;

@@ -69,6 +69,18 @@ module.exports = {
             .then(dbModel => res.json(dbModel))
             .catch(err => res.status(422).json(err));
     },
+    getMailbox: function (req, res) {
+        db.User.findOne({ _id: req.session.user.id })
+            .populate('mailbox')
+            .then(dbModel => res.json(dbModel))
+            .catch(err => res.status(500).json(err));
+    },
+    updateMailbox: function (req, res) {
+            db.User
+            .findOneAndUpdate({ _id: req.params.id }, { $push: { mailbox: req.body} })
+            .then(dbModel => res.json(dbModel))
+            .catch(err => res.status(422).json(err));  
+    },
 
     // delete request to delete user's profile
     remove: function (req, res) {
