@@ -36,9 +36,9 @@ const userSchema = new Schema({
       converser: {
         type: Schema.Types.ObjectId,
         ref: "User",
-        unique: true
       },
-      lastChange: { type: Date, default: Date.now }
+      lastChange: { type: Date, default: Date.now },
+      
     }
   ]
 });
