@@ -3,6 +3,6 @@ module.exports = {
     Adventure: require("./adventure"),
     Review: require("./review"),
     Messages: require("./message"),
-    Tag: require("./tag")
+    Tag: require("./tag"),
   };
   
