@@ -33,10 +33,13 @@ const userSchema = new Schema({
   ],
   mailbox: [
     {
-      type: Schema.Types.ObjectId,
-      ref: "User",
-      unique: true
-    }  
+      converser: {
+        type: Schema.Types.ObjectId,
+        ref: "User",
+        unique: true
+      },
+      lastChange: { type: Date, default: Date.now }
+    }
   ]
 });
 
