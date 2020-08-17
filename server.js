@@ -19,8 +19,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 app.use(cors({
-  origin:["https://guidemedimma.herokuapp.com"],
-  credentials:true
+  origin: ["http://localhost:3000", "https://guidemedimma.herokuapp.com"],
+  credentials: true
 }));
 
 // Session Setup
@@ -31,7 +31,7 @@ app.use(session({
   cookie: {
     maxAge: 7200000
   },
-  store: new MemoryStore({checkPeriod: 7200000})
+  store: new MemoryStore({ checkPeriod: 7200000 })
 }))
 
 // Connects with MongoDB via Mongoose
@@ -55,7 +55,7 @@ io.on('connection', function (socket) {
   socket.on('send-chat-message', data => {
     io.to(data.recipient).emit('chat-message', data.user + ": " + data.message)
   })
-  socket.on('disconnect', ()=>{
+  socket.on('disconnect', () => {
     console.log("User Disconnected")
   })
 })
