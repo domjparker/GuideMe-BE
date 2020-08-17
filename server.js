@@ -28,7 +28,11 @@ app.use(session({
   secret: "dimma stealth",
   resave: false,
   saveUninitialized: true,
-  cookie: {maxAge: 7200000},
+  cookie: {
+    maxAge: 7200000,
+    sameSite: "none",
+    secure: true
+  },
   store: new MemoryStore({checkPeriod: 7200000})
 }))
 
