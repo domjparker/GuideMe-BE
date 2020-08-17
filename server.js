@@ -27,7 +27,8 @@ app.use(cors({
 app.use(session({
   secret: "dimma stealth",
   resave: false,
-  saveUninitialized: true,
+  saveUninitialized: false,
+  proxy:true,
   cookie: {
     maxAge: 7200000, 
     sameSite: "none",

@@ -37,7 +37,7 @@ module.exports = {
                         id: data._id,
                         email: data.email
                     }
-                    res.send("session login successful");
+                    res.json(req.session);
                 } else {
                     res.status(401).send("wrong password")
                 }
