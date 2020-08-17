@@ -6,7 +6,7 @@ const session = require("express-session")
 const logger = require("morgan");
 const mongoose = require("mongoose");
 const routes = require("./routes");
-const { MemoryStore } = require("express-session");
+// const { MemoryStore } = require("express-session");
 
 // Express App Setup
 const app = express();
@@ -30,8 +30,8 @@ app.use(session({
   saveUninitialized: true,
   cookie: {
     maxAge: 7200000
-  },
-  store: new MemoryStore({ checkPeriod: 7200000 })
+  }
+  // store: new MemoryStore({ checkPeriod: 7200000 })
 }))
 
 // Connects with MongoDB via Mongoose
