@@ -19,7 +19,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 app.use(cors({
-  origin:["https://guidemedimma.herokuapp.com"],
+  origin:["https://guidemedimma.herokuapp.com/"],
   credentials:true
 }));
 
