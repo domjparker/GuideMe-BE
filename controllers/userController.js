@@ -5,6 +5,7 @@ const { User } = require("../models");
 module.exports = {
     // get request to get user info by _id
     findBySessionId: function (req, res) {
+        console.log("this is SESSION INFO ",req.session.user)
         db.User.findOne({ _id: req.session.user.id })
             .populate('tags')
             .then(dbModel => res.json(dbModel))

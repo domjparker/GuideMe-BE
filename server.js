@@ -19,8 +19,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 app.use(cors({
-  origin:["http://localhost:3000"],
-  credentials:true
+  origin: ["http://localhost:3000"],
+  credentials: true
 }));
 
 // Session Setup
@@ -28,8 +28,10 @@ app.use(session({
   secret: "dimma stealth",
   resave: false,
   saveUninitialized: true,
-  cookie: {maxAge: 7200000},
-  store: new MemoryStore({checkPeriod: 7200000})
+  cookie: {
+    maxAge: 7200000
+  },
+  store: new MemoryStore({ checkPeriod: 7200000 })
 }))
 
 // Connects with MongoDB via Mongoose
@@ -53,7 +55,7 @@ io.on('connection', function (socket) {
   socket.on('send-chat-message', data => {
     io.to(data.recipient).emit('chat-message', data.user + ": " + data.message)
   })
-  socket.on('disconnect', ()=>{
+  socket.on('disconnect', () => {
     console.log("User Disconnected")
   })
 })
