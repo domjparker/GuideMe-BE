@@ -1,0 +1,32 @@
+{
+  "name": "GuideMe-BE",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "seed": "node scripts/seedDB.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/domjparker/GuideMe-BE.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/domjparker/GuideMe-BE/issues"
+  },
+  "homepage": "https://github.com/domjparker/GuideMe-BE#readme",
+  "dependencies": {
+    "bcrypt": "^5.0.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "express-session": "^1.17.1",
+    "memorystore": "^1.6.2",
+    "mongoose": "^5.9.28",
+    "morgan": "^1.10.0",
+    "socket.io": "^2.3.0"
+  }
+}
