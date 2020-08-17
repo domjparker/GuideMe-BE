@@ -59,17 +59,25 @@ module.exports = {
         db.User.findOneAndUpdate({ _id: req.session.user.id }, {
             bio: req.body.bio,
             location: req.body.location,
-            profilePictureUrl: req.body.profilePictureUrl
             // tags: req.body.tags,
         })
             .then(dbModel => res.json(dbModel))
             .catch(err => res.status(422).json(err));
     },
 
+    // put request to update user profile picture
     updatePicture: function (req, res) {
         db.User.findOneAndUpdate({ _id: req.session.user.id }, {
             profilePictureUrl: req.body.profilePictureUrl
-            // tags: req.body.tags,
+        })
+            .then(dbModel => res.json(dbModel))
+            .catch(err => res.status(422).json(err));
+    },
+
+    // put request to update user profile banner pic
+    updateBanner: function (req, res) {
+        db.User.findOneAndUpdate({ _id: req.session.user.id }, {
+            profileBannerUrl: req.body.profileBannerUrl
         })
             .then(dbModel => res.json(dbModel))
             .catch(err => res.status(422).json(err));

@@ -24,7 +24,8 @@ const userSchema = new Schema({
 ],
   // for cloudinary
   profilePictureUrl: { type: String },
-  bannerPictureUrl: { type: String },
+  profileBannerUrl: { type: String},
+  
   tags:[
     {
         type: Schema.Types.ObjectId,

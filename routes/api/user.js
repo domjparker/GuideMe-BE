@@ -9,14 +9,23 @@ router.route("/signup")
 router.route("/login")
     .post(userController.login);
 
+// matches with "/api/user/logout"
 router.route("/logout")
     .post(userController.logout);
 
 // matches with "/api/user/profile"
-router.route("/profile")
+router.route("/profile/")
     .get(userController.findBySessionId)
-    .put(userController.updatePicture)
+    .put(userController.update)
     .delete(userController.remove);
+    
+// matches with "/api/user/profile/picture"
+router.route("/profile/picture")
+    .put(userController.updatePicture)
+
+// matches with "/api/user/profile/banner"
+router.route("/profile/banner")
+    .put(userController.updateBanner)
 
     // matches with "/api/user/getSession
 router.route("/getSession")
