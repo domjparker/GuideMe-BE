@@ -32,4 +32,9 @@ router.route("/profile/banner")
 router.route("/getSession")
     .get(userController.getSession);
 
+// matches with "/api/user/mailbox
+router.route("/mailbox")
+    .get(userController.getMailbox)
+    .put(userController.updateMailbox)
+
 module.exports = router;
