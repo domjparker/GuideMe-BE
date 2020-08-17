@@ -56,11 +56,7 @@ module.exports = {
 
     // put request to update user bio and location
     update: function (req, res) {
-        db.User.findOneAndUpdate({ _id: req.session.user.id }, {
-            bio: req.body.bio,
-            location: req.body.location,
-            // tags: req.body.tags,
-        })
+        db.User.findOneAndUpdate({ _id: req.session.user.id }, req.body)
             .then(dbModel => res.json(dbModel))
             .catch(err => res.status(422).json(err));
     },
@@ -82,7 +78,21 @@ module.exports = {
             .then(dbModel => res.json(dbModel))
             .catch(err => res.status(422).json(err));
     },
-
+    getMailbox: function (req, res) {
+        db.User.findOne({ _id: req.session.user.id })
+            .populate('mailbox.converser', 'firstName')
+            .then(dbModel => res.json(dbModel))
+            .catch(err => res.status(500).json(err));
+    },
+    // updates mailbox for both sender and recipient
+    updateMailbox: function (req, res) {
+            db.User.findOneAndUpdate({ _id: req.session.user.id}, { $push: { mailbox: {converser: req.body.converser}} })
+            .then(dbModel => res.json(dbModel))
+            .catch(err => res.status(422).json(err));
+            db.User.findOneAndUpdate({ _id: req.body.converser}, { $push: { mailbox: {converser: req.session.user.id}} })
+            .then(dbModel => res.json(dbModel))
+            .catch(err => res.status(422).json(err));  
+    },
     // delete request to delete user's profile
     remove: function (req, res) {
         db.User.findById({ _id: req.session.user.id })
