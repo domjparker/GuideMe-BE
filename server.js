@@ -29,7 +29,9 @@ app.use(session({
   resave: false,
   saveUninitialized: true,
   cookie: {
-    maxAge: 7200000
+    maxAge: 7200000, 
+    sameSite: "none",
+    secure:true
   }
   // store: new MemoryStore({ checkPeriod: 7200000 })
 }))
