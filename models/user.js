@@ -21,12 +21,17 @@ const userSchema = new Schema({
       type: Schema.Types.ObjectId,
       ref: "Adventure"
     }
-],
-  // for cloudinary
+  ],
+  // url for cloudinary
   profilePictureUrl: { type: String },
-  profileBannerUrl: { type: String},
-  
-  tags:[
+  bannerPictureUrl: { type: String },
+  tags: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Tag"
+    }
+  ],
+  mailbox: [
     {
       converser: {
         type: Schema.Types.ObjectId,
