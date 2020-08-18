@@ -53,7 +53,7 @@ var io = require('socket.io')(server);
 io.on('connection', function (socket) {
   console.log('Client connected...')
   socket.on('send-chat-message', data => {
-    io.to(data.recipient).emit('chat-message', data.user + ": " + data.message)
+    io.to(data.id === socketid == id).emit('chat-message', data.name + ": " + data.messageText)
   })
   socket.on('disconnect', () => {
     console.log("User Disconnected")
