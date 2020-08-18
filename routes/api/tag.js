@@ -3,6 +3,7 @@ const tagController = require("../../controllers/tagController")
 
 // matches with "/api/tag"
 router.route("/")
+    .get(tagController.getAllTags)
     .post(tagController.create);
 
 // matches with "/api/tag/:id"
