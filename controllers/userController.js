@@ -81,7 +81,7 @@ module.exports = {
     },
     getMailbox: function (req, res) {
         db.User.findOne({ _id: req.session.user.id })
-            .populate('mailbox.converser', 'firstName')
+            .populate('mailbox.converser')
             .then(dbModel => res.json(dbModel))
             .catch(err => res.status(500).json(err));
     },
