@@ -46,8 +46,8 @@ const adventureSchema = new Schema({
     gearList: {
         type: String
     },
-    imageId: {
-        type: Number
+    adventureImageUrl: {
+        type: String
     },
     tags: [
         {
