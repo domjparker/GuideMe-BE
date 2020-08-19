@@ -1,6 +1,12 @@
 const db = require("../models")
 
 module.exports = {
+    getAllTags: function(req,res) {
+        db.Tag
+        .find()
+        .then(dbModel => res.json(dbModel))
+        .catch(err => res.status(422).json(err));
+    },
     findById: function(req,res) {
         db.Tag
         .findById(req.params.id)

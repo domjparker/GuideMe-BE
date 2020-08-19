@@ -28,7 +28,7 @@ module.exports = {
     findById: function (req, res) {
         db.Adventure
             .findById(req.params.id)
-            .populate('hostId')
+            .populate('hostId', `tags`)
             .then(dbModel => res.json(dbModel))
             .catch(err => res.status(422).json(err));
     },
@@ -46,23 +46,11 @@ module.exports = {
             .catch(err => res.status(422).json(err));
     },
     update: function (req, res) {
-        const queryObj = req.body
-        const tags = req.body.tags
-        delete queryObj.tags
-        if(tags){
-            db.Adventure
-            .findOneAndUpdate({ _id: req.params.id }, queryObj)
-            .findOneAndUpdate({ _id: req.params.id }, { $push: { tags: [tags] } })
+        db.Adventure
+            .findOneAndUpdate({ _id: req.params.id }, req.body)
             .populate('tags', 'tagName')
             .then(dbModel => res.json(dbModel))
-            .catch(err => res.status(422).json(err));
-        }else{
-            db.Adventure
-            .findOneAndUpdate({ _id: req.params.id }, queryObj)
-            .populate('tags', 'tagName')
-            .then(dbModel => res.json(dbModel))
-            .catch(err => res.status(422).json(err));
-        }
+            .catch(err => res.status(422).json(err));     
         
     },
     remove: function (req, res) {
