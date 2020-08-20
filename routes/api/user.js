@@ -12,7 +12,7 @@ router.route("/login")
 
 // matches with "/api/user/logout"
 router.route("/logout")
-    .post(userController.logout);
+    .get(userController.logout);
 
 // matches with "/api/user/profile"
 router.route("/profile/")
