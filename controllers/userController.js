@@ -5,7 +5,6 @@ const { User } = require("../models");
 module.exports = {
     // get request to get user info by _id
     findBySessionId: function (req, res) {
-        console.log("this is SESSION INFO ",req.session.user)
         db.User.findOne({ _id: req.session.user.id })
             .populate('tags')
             .then(dbModel => res.json(dbModel))
@@ -37,6 +36,8 @@ module.exports = {
                         id: data._id,
                         email: data.email
                     }
+                    console.log(req.session)
+                    console.log(req.session.user)
                     res.send("session login successful");
                 } else {
                     res.status(401).send("wrong password")
@@ -50,9 +51,11 @@ module.exports = {
         res.json(req.session.user)
     },
     logout: function (req, res) {
+        console.log(req.session)
+        console.log("THIS IS SESSION USER")
         req.session.destroy()
-        console.log("User is logged out")
-        // TODO: needs a redirect if inside user profile, etc.
+       res.send("User is logged out")
+
     },
 
     // put request to update user bio and location
