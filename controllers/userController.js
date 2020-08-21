@@ -10,6 +10,12 @@ module.exports = {
             .then(dbModel => res.json(dbModel))
             .catch(err => res.status(500).json(err));
     },
+    findUserById: function (req, res) {
+        db.User.findOne({ _id: req.params.id })
+            .populate('tags')
+            .then(dbModel => res.json(dbModel))
+            .catch(err => res.status(500).json(err));
+    },
     // post request to create a user upon signup
     signup: function async(req, res) {
         db.User.create({
