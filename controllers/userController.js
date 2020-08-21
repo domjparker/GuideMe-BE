@@ -97,6 +97,20 @@ module.exports = {
             .then(dbModel => res.json(dbModel))
             .catch(err => res.status(422).json(err));  
     },
+    //Gets availability array
+    getAvailability: function (req, res) {
+        db.User.findOne({ _id: req.body.id })
+            .populate('availability')
+            .then(dbModel => res.json(dbModel))
+            .catch(err => res.status(500).json(err));
+    },
+    // Update availability array
+    updateAvailability: function (req, res) {
+        db.User.findOneAndUpdate({ _id: req.body.id }, {availability: req.body.availability})
+            .populate('availability')
+            .then(dbModel => res.json(dbModel))
+            .catch(err => res.status(500).json(err));
+    },
     // delete request to delete user's profile
     remove: function (req, res) {
         db.User.findById({ _id: req.session.user.id })

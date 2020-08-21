@@ -36,5 +36,8 @@ router.route("/getSession")
 router.route("/mailbox")
     .get(userController.getMailbox)
     .put(userController.updateMailbox)
+router.route("/availability")
+    .get(userController.getAvailability)
+    .put(userController.updateAvailability)
 
 module.exports = router;
