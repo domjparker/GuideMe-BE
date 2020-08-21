@@ -52,7 +52,7 @@ module.exports = {
     },
     logout: function (req, res) {
         console.log(req.session)
-        console.log("THIS IS SESSION USER")
+        console.log("THIS IS SESSION")
         req.session.destroy()
        res.send("User is logged out")
 
