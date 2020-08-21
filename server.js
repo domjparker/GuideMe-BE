@@ -53,31 +53,46 @@ var io = require('socket.io')(server);
 var connectedUsers = []
 io.on('connection', function (socket) {
   console.log("User Connected!")
-  
+
   //Server listens for user login
   socket.on('login', (userId) => {
     //Sets socket nickname to user's database ID
     socket.nickname = userId
     // Set array that is all sockets connected
-    connectedUsers = Object.keys(io.sockets.connected) 
+    connectedUsers.push(socket.id)
+    console.log(socket.nickname)
   })
 
   //Server listens for user message
-  socket.on('sendText', (messageObj)=>{
+  socket.on('sendText', (messageObj) => {
+    console.log(messageObj)
     // Loops through all connected users
     connectedUsers.forEach(userKey => {
-      // Loops through users in io object
-      for(userKey in io.sockets.connected){
-        console.log(io.sockets.connected[userKey].nickname)
+      console.log(connectedUsers)
         //Checks if the reciever id matches the user nickname
-        if(io.sockets.connected[userKey].nickname===messageObj.receiverId){
-          //Sends the message to the intended user.
-          console.log(userKey)
-          io.to(userKey).emit('text', messageObj)
+        if(io.sockets.connected[userKey].nickname){
+          if (io.sockets.connected[userKey].nickname === messageObj.recieverId) {
+            //Sends the message to the intended user.
+            console.log("MESSAGE SENT TO: " + userKey)
+            io.to(userKey).emit('text', messageObj)
+          }
         }
-      }
-    })
+        
     
-  })
+    })
 
+  })
+  socket.on('close', () => {
+    function checkId(id) {
+      return id !== socket.id
+    }
+    console.log(connectedUsers)
+    connectedUsers  = connectedUsers.filter(checkId)
+    console.log(connectedUsers)
+  })
+  socket.on('disconnect', () => {
+    console.log(connectedUsers)
+    connectedUsers.filter(socket.id)
+    console.log(connectedUsers)
+  })
 })
