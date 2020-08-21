@@ -12,14 +12,17 @@ router.route("/login")
 
 // matches with "/api/user/logout"
 router.route("/logout")
-    .get(userController.logout);
+    .post(userController.logout);
 
 // matches with "/api/user/profile"
 router.route("/profile/")
     .get(userController.findBySessionId)
     .put(userController.update)
     .delete(userController.remove);
-    
+// matches with "/api/user/foreign/profile"
+router.route("/profile/:id")
+.get(userController.findUserById)
+
 // matches with "/api/user/profile/picture"
 router.route("/profile/picture")
     .put(userController.updatePicture)
@@ -36,5 +39,8 @@ router.route("/getSession")
 router.route("/mailbox")
     .get(userController.getMailbox)
     .put(userController.updateMailbox)
+router.route("/availability")
+    .get(userController.getAvailability)
+    .put(userController.updateAvailability)
 
 module.exports = router;
