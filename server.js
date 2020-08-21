@@ -50,12 +50,49 @@ var server = app.listen(PORT, () => {
 //Socket.io Setup
 var io = require('socket.io')(server);
 //Listens for incoming connections from Client.
+var connectedUsers = []
 io.on('connection', function (socket) {
-  console.log('Client connected...')
-  socket.on('send-chat-message', data => {
-    io.to(data.id === socketid == id).emit('chat-message', data.name + ": " + data.messageText)
+  console.log("User Connected!")
+
+  //Server listens for user login
+  socket.on('login', (userId) => {
+    //Sets socket nickname to user's database ID
+    socket.nickname = userId
+    // Set array that is all sockets connected
+    connectedUsers.push(socket.id)
+    console.log(socket.nickname)
+  })
+
+  //Server listens for user message
+  socket.on('sendText', (messageObj) => {
+    console.log(messageObj)
+    // Loops through all connected users
+    connectedUsers.forEach(userKey => {
+      console.log(connectedUsers)
+        //Checks if the reciever id matches the user nickname
+        if(io.sockets.connected[userKey].nickname){
+          if (io.sockets.connected[userKey].nickname === messageObj.recieverId) {
+            //Sends the message to the intended user.
+            console.log("MESSAGE SENT TO: " + userKey)
+            io.to(userKey).emit('text', messageObj)
+          }
+        }
+        
+    
+    })
+
+  })
+  socket.on('close', () => {
+    function checkId(id) {
+      return id !== socket.id
+    }
+    console.log(connectedUsers)
+    connectedUsers  = connectedUsers.filter(checkId)
+    console.log(connectedUsers)
   })
   socket.on('disconnect', () => {
-    console.log("User Disconnected")
+    console.log(connectedUsers)
+    connectedUsers.filter(socket.id)
+    console.log(connectedUsers)
   })
 })

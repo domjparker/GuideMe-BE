@@ -5,7 +5,6 @@ const { User } = require("../models");
 module.exports = {
     // get request to get user info by _id
     findBySessionId: function (req, res) {
-        console.log("this is SESSION INFO ",req.session.user)
         db.User.findOne({ _id: req.session.user.id })
             .populate('tags')
             .then(dbModel => res.json(dbModel))
@@ -37,6 +36,8 @@ module.exports = {
                         id: data._id,
                         email: data.email
                     }
+                    console.log(req.session)
+                    console.log(req.session.user)
                     res.send("session login successful");
                 } else {
                     res.status(401).send("wrong password")
@@ -50,9 +51,11 @@ module.exports = {
         res.json(req.session.user)
     },
     logout: function (req, res) {
+        console.log(req.session)
+        console.log("THIS IS SESSION")
         req.session.destroy()
-        console.log("User is logged out")
-        // TODO: needs a redirect if inside user profile, etc.
+       res.send("User is logged out")
+
     },
 
     // put request to update user bio and location
@@ -93,6 +96,20 @@ module.exports = {
             db.User.findOneAndUpdate({ _id: req.body.converser}, { $push: { mailbox: {converser: req.session.user.id}} })
             .then(dbModel => res.json(dbModel))
             .catch(err => res.status(422).json(err));  
+    },
+    //Gets availability array
+    getAvailability: function (req, res) {
+        db.User.findOne({ _id: req.body.id })
+            .populate('availability')
+            .then(dbModel => res.json(dbModel))
+            .catch(err => res.status(500).json(err));
+    },
+    // Update availability array
+    updateAvailability: function (req, res) {
+        db.User.findOneAndUpdate({ _id: req.body.id }, {availability: req.body.availability})
+            .populate('availability')
+            .then(dbModel => res.json(dbModel))
+            .catch(err => res.status(500).json(err));
     },
     // delete request to delete user's profile
     remove: function (req, res) {
