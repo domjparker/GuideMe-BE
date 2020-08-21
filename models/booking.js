@@ -16,6 +16,7 @@ const bookingSchema = new Schema({
     startTime:{type:Date, required:true},
     completionStatus:{type:Boolean, default:false},
     transactionId:{type:Number}
+    
 });
 
 const Booking = mongoose.model("Booking", bookingSchema);
