@@ -1,9 +1,9 @@
 const router = require("express").Router();
-const bookingController = require("../../controllers/bookingControllers");
+const bookingController = require("../../controllers/bookingController");
 
 // BOOKING ROUTE
 router.route("/")
-.get(bookingController.getBookingAdventure)
+.get(bookingController.getBookingByAdventure)
 .post(bookingController.create);
 
 

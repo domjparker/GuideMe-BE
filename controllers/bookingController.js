@@ -1,7 +1,7 @@
 const db = require("../models")
 
 module.exports = {
-    getBookingbyAdventure: function(req,res) {
+    getBookingByAdventure: function(req,res) {
         db.Booking
         .find({adventureId:req.body.id})
         .then(dbModel => res.json(dbModel))
