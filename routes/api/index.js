@@ -3,6 +3,7 @@ const adventureRoutes = require("./adventure");
 const userRoutes = require("./user");
 const messageRoutes = require("./message");
 const tagRoutes = require("./tag");
+
 const { route } = require("./adventure");
 
 //Routes
