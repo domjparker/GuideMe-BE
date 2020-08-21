@@ -19,6 +19,10 @@ const adventureSchema = new Schema({
         type: String,
         required: true
     },
+    stateLocation: {
+        type: String,
+        required: true
+    },
     itinerary: {
         type: String,
         required: true
