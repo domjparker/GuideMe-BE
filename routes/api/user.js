@@ -41,6 +41,7 @@ router.route("/mailbox")
     .put(userController.updateMailbox)
 // matches with "/api/user/availability"
 router.route("/availability")
+    .get(userController.getAvailability)
     .put(userController.updateAvailability)
 // matches with "/api/user/availability/:id"
 router.route("/availability/:id")

@@ -110,6 +110,12 @@ module.exports = {
             .then(dbModel => res.json(dbModel))
             .catch(err => res.status(500).json(err));
     },
+    getAvailability: function (req, res) {
+        db.User.findOne({ _id: req.session.id })
+            .populate('availability')
+            .then(dbModel => res.json(dbModel))
+            .catch(err => res.status(500).json(err));
+    },
     // Update availability array
     updateAvailability: function (req, res) {
         db.User.findOneAndUpdate({ _id: req.session.id }, {availability: req.body.availability})
