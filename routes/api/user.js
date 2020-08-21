@@ -19,7 +19,7 @@ router.route("/profile/")
     .get(userController.findBySessionId)
     .put(userController.update)
     .delete(userController.remove);
-// matches with "/api/user/foreign/profile"
+// matches with "/api/usernod/profile"
 router.route("/profile/:id")
 .get(userController.findUserById)
 
@@ -31,16 +31,18 @@ router.route("/profile/picture")
 router.route("/profile/banner")
     .put(userController.updateBanner)
 
-    // matches with "/api/user/getSession
+    // matches with "/api/user/getSession"
 router.route("/getSession")
     .get(userController.getSession);
 
-// matches with "/api/user/mailbox
+// matches with "/api/user/mailbox"
 router.route("/mailbox")
     .get(userController.getMailbox)
     .put(userController.updateMailbox)
+// matches with "/api/user/availability"
 router.route("/availability")
-    .get(userController.getAvailability)
     .put(userController.updateAvailability)
-
+// matches with "/api/user/availability/:id"
+router.route("/availability/:id")
+    .get(userController.getHostAvailability)
 module.exports = router;
