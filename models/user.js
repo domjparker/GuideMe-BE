@@ -40,6 +40,17 @@ const userSchema = new Schema({
       lastChange: { type: Date, default: Date.now },
       
     }
+  ],
+  availability: [
+    {
+      startDate: {type:Date},
+      endDate: {type:Date},
+      timeZone:{type:String},
+      adventureId: {
+        type: Schema.Types.ObjectId,
+        ref: "User",
+      }
+    }
   ]
 });
 
