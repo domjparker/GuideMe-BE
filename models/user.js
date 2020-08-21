@@ -43,12 +43,12 @@ const userSchema = new Schema({
   ],
   availability: [
     {
-      startDate: {type:Date},
-      endDate: {type:Date},
+      startDate: {type:Date, required:true},
+      endDate: {type:Date, required:true},
       timeZone:{type:String},
       adventureId: {
         type: Schema.Types.ObjectId,
-        ref: "User",
+        ref: "Adventure",
       }
     }
   ]
