@@ -3,7 +3,7 @@ const db = require("../models")
 module.exports = {
     getBookingByAdventure: function(req,res) {
         db.Booking
-        .find({adventureId:req.body.id})
+        .find({adventureId:req.params.id})
         .then(dbModel => res.json(dbModel))
         .catch(err => res.status(422).json(err));
     },
