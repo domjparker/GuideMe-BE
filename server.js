@@ -91,8 +91,11 @@ io.on('connection', function (socket) {
     console.log(connectedUsers)
   })
   socket.on('disconnect', () => {
+    function checkId(id) {
+      return id !== socket.id
+    }
     console.log(connectedUsers)
-    connectedUsers.filter(socket.id)
+    connectedUsers.filter(checkId)
     console.log(connectedUsers)
   })
 })
