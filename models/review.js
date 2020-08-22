@@ -4,11 +4,13 @@ const Schema = mongoose.Schema;
 const reviewSchema = new Schema({
     userId:{
         type: Schema.Types.ObjectId,
-        ref: "User"
+        ref: "User", 
+        required: true
       },
     adventureId:{
         type: Schema.Types.ObjectId,
-        ref: "Adventure"
+        ref: "Adventure",
+        required: true
     },
     title:{
         type: String,
@@ -16,6 +18,10 @@ const reviewSchema = new Schema({
     },
     body:{
         type: String,
+        required: true
+    },
+    rating:{
+        type: Number,
         required: true
     }
 });
