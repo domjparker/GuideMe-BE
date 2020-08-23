@@ -138,6 +138,9 @@ module.exports = {
         db.Adventure.deleteMany({ hostId: req.session.user.id })
             .then(() => console.log("deleted"))
             .catch(err => res.status(422).json(err));
+        db.Community.deleteMany({ targetId: req.session.user.id })
+            .then(() => res.status(204).end())
+            .catch(err => res.status(500).json(err));
     },
 };
 
