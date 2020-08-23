@@ -4,6 +4,7 @@ module.exports = {
     findAll: function (req, res) {
         db.Community
         .find(req.query)
+        .sort({createdAt:'desc'})
         .populate('targetId')
         .populate('adventureId', "adventureName")
         .then(dbModel => res.json(dbModel))
