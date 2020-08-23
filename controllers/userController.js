@@ -111,14 +111,16 @@ module.exports = {
             .catch(err => res.status(500).json(err));
     },
     getAvailability: function (req, res) {
-        db.User.findOne({ _id: req.session.id })
+        db.User.findOne({ _id: req.session.user.id })
             .populate('availability')
             .then(dbModel => res.json(dbModel))
             .catch(err => res.status(500).json(err));
     },
     // Update availability array
     updateAvailability: function (req, res) {
-        db.User.findOneAndUpdate({ _id: req.session.id }, {availability: req.body.availability})
+        db.User.findOneAndUpdate({ _id: req.session.user.id }, {
+            availability: req.body.availability
+        })
             .populate('availability')
             .then(dbModel => res.json(dbModel))
             .catch(err => res.status(500).json(err));
