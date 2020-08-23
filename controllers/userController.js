@@ -16,7 +16,7 @@ module.exports = {
             .then(dbModel => res.json(dbModel))
             .catch(err => res.status(500).json(err));
     },
-    // post request to create a user upon signup
+    // post request to create a user upon signup + add new user to community db
     signup: function async(req, res) {
         db.User.create({
             firstName: req.body.firstName,
@@ -25,7 +25,13 @@ module.exports = {
             password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null)
         }).then(dbModel => {
             res.json(dbModel)
-            res.status(204).end();
+            db.Community.create({
+                targetId: dbModel._id,
+                action: "newUser",
+                adventureId: null
+            }).then(() => {
+                res.status(204).end();
+            }).catch(err => res.status(500).json(err));
         }).catch(err => res.status(500).json(err));
     },
 
@@ -60,7 +66,7 @@ module.exports = {
         console.log(req.session)
         console.log("THIS IS SESSION")
         req.session.destroy()
-       res.send("User is logged out")
+        res.send("User is logged out")
 
     },
 
@@ -96,12 +102,12 @@ module.exports = {
     },
     // updates mailbox for both sender and recipient
     updateMailbox: function (req, res) {
-            db.User.findOneAndUpdate({ _id: req.session.user.id}, { $push: { mailbox: {converser: req.body.converser}} })
+        db.User.findOneAndUpdate({ _id: req.session.user.id }, { $push: { mailbox: { converser: req.body.converser } } })
             .then(dbModel => res.json(dbModel))
             .catch(err => res.status(422).json(err));
-            db.User.findOneAndUpdate({ _id: req.body.converser}, { $push: { mailbox: {converser: req.session.user.id}} })
+        db.User.findOneAndUpdate({ _id: req.body.converser }, { $push: { mailbox: { converser: req.session.user.id } } })
             .then(dbModel => res.json(dbModel))
-            .catch(err => res.status(422).json(err));  
+            .catch(err => res.status(422).json(err));
     },
     //Gets availability array
     getHostAvailability: function (req, res) {
@@ -118,7 +124,7 @@ module.exports = {
     },
     // Update availability array
     updateAvailability: function (req, res) {
-        db.User.findOneAndUpdate({ _id: req.session.id }, {availability: req.body.availability})
+        db.User.findOneAndUpdate({ _id: req.session.id }, { availability: req.body.availability })
             .populate('availability')
             .then(dbModel => res.json(dbModel))
             .catch(err => res.status(500).json(err));
@@ -130,7 +136,7 @@ module.exports = {
             .then(dbModel => res.json(dbModel))
             .catch(err => res.status(422).json(err));
         db.Adventure.deleteMany({ hostId: req.session.user.id })
-            .then(()=> console.log("deleted"))
+            .then(() => console.log("deleted"))
             .catch(err => res.status(422).json(err));
     },
 };
