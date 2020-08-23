@@ -4,5 +4,7 @@ module.exports = {
     Review: require("./review"),
     Messages: require("./message"),
     Tag: require("./tag"),
+    Booking: require("./booking"),
+    Community: require("./community")
   };
   

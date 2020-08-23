@@ -5,13 +5,18 @@ const { User } = require("../models");
 module.exports = {
     // get request to get user info by _id
     findBySessionId: function (req, res) {
-        console.log("this is SESSION INFO ",req.session.user)
         db.User.findOne({ _id: req.session.user.id })
             .populate('tags')
             .then(dbModel => res.json(dbModel))
             .catch(err => res.status(500).json(err));
     },
-    // post request to create a user upon signup
+    findUserById: function (req, res) {
+        db.User.findOne({ _id: req.params.id })
+            .populate('tags')
+            .then(dbModel => res.json(dbModel))
+            .catch(err => res.status(500).json(err));
+    },
+    // post request to create a user upon signup + add new user to community db
     signup: function async(req, res) {
         db.User.create({
             firstName: req.body.firstName,
@@ -20,7 +25,13 @@ module.exports = {
             password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null)
         }).then(dbModel => {
             res.json(dbModel)
-            res.status(204).end();
+            db.Community.create({
+                targetId: dbModel._id,
+                action: "newUser",
+                adventureId: null
+            }).then(() => {
+                res.status(204).end();
+            }).catch(err => res.status(500).json(err));
         }).catch(err => res.status(500).json(err));
     },
 
@@ -50,9 +61,11 @@ module.exports = {
         res.json(req.session.user)
     },
     logout: function (req, res) {
+        console.log(req.session)
+        console.log("THIS IS SESSION")
         req.session.destroy()
-        console.log("User is logged out")
-        // TODO: needs a redirect if inside user profile, etc.
+        res.send("User is logged out")
+
     },
 
     // put request to update user bio and location
@@ -87,12 +100,34 @@ module.exports = {
     },
     // updates mailbox for both sender and recipient
     updateMailbox: function (req, res) {
-            db.User.findOneAndUpdate({ _id: req.session.user.id}, { $push: { mailbox: {converser: req.body.converser}} })
+        db.User.findOneAndUpdate({ _id: req.session.user.id }, { $push: { mailbox: { converser: req.body.converser } } })
             .then(dbModel => res.json(dbModel))
             .catch(err => res.status(422).json(err));
-            db.User.findOneAndUpdate({ _id: req.body.converser}, { $push: { mailbox: {converser: req.session.user.id}} })
+        db.User.findOneAndUpdate({ _id: req.body.converser }, { $push: { mailbox: { converser: req.session.user.id } } })
             .then(dbModel => res.json(dbModel))
-            .catch(err => res.status(422).json(err));  
+            .catch(err => res.status(422).json(err));
+    },
+    //Gets availability array
+    getHostAvailability: function (req, res) {
+        db.User.findOne({ _id: req.params.id })
+            .populate('availability')
+            .then(dbModel => res.json(dbModel))
+            .catch(err => res.status(500).json(err));
+    },
+    getAvailability: function (req, res) {
+        db.User.findOne({ _id: req.session.user.id })
+            .populate('availability')
+            .then(dbModel => res.json(dbModel))
+            .catch(err => res.status(500).json(err));
+    },
+    // Update availability array
+    updateAvailability: function (req, res) {
+        db.User.findOneAndUpdate({ _id: req.session.user.id }, {
+            availability: req.body.availability
+        })
+            .populate('availability')
+            .then(dbModel => res.json(dbModel))
+            .catch(err => res.status(500).json(err));
     },
     // delete request to delete user's profile
     remove: function (req, res) {
@@ -101,7 +136,7 @@ module.exports = {
             .then(dbModel => res.json(dbModel))
             .catch(err => res.status(422).json(err));
         db.Adventure.deleteMany({ hostId: req.session.user.id })
-            .then(()=> console.log("deleted"))
+            .then(() => console.log("deleted"))
             .catch(err => res.status(422).json(err));
     },
 };

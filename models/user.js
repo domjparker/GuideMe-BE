@@ -8,6 +8,7 @@ const userSchema = new Schema({
   password: { type: String, required: true },
   bio: { type: String },
   location: { type: String },
+  stateLocation: { type: String },
   verified: { type: Boolean, default: false },
   host: { type: Boolean, default: false },
   hostedAdventures: [
@@ -39,6 +40,16 @@ const userSchema = new Schema({
       },
       lastChange: { type: Date, default: Date.now },
       
+    }
+  ],
+  availability: [
+    {
+      startDate: {type:Date, required:true},
+      timeZone:{type:String},
+      adventureId: {
+        type: Schema.Types.ObjectId,
+        ref: "Adventure",
+      }
     }
   ]
 });
