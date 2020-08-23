@@ -39,19 +39,28 @@ module.exports = {
             .then(dbModel => res.json(dbModel))
             .catch(err => res.status(422).json(err));
     },
+    // post request to create a new adventure + add new adventure to community db
     create: function (req, res) {
         db.Adventure
             .create(req.body)
-            .then(dbModel => res.json(dbModel))
-            .catch(err => res.status(422).json(err));
+            .then(dbModel => {
+                res.json(dbModel)
+                db.Community.create({
+                    targetId: dbModel.hostId,
+                    action: "newAdventure",
+                    adventureId: dbModel._id
+                }).then(() => {
+                    res.status(204).end();
+                }).catch(err => res.status(500).json(err));
+            }).catch(err => res.status(422).json(err));
     },
     update: function (req, res) {
         db.Adventure
             .findOneAndUpdate({ _id: req.params.id }, req.body)
             .populate('tags', 'tagName')
             .then(dbModel => res.json(dbModel))
-            .catch(err => res.status(422).json(err));     
-        
+            .catch(err => res.status(422).json(err));
+
     },
     remove: function (req, res) {
         db.Adventure
