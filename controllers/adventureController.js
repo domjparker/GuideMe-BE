@@ -29,6 +29,7 @@ module.exports = {
         db.Adventure
             .findById(req.params.id)
             .populate('hostId', `tags`)
+            .populate('tags', 'tagName')
             .then(dbModel => res.json(dbModel))
             .catch(err => res.status(422).json(err));
     },
