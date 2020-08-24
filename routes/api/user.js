@@ -49,4 +49,9 @@ router.route("/availability/booking")
 // matches with "/api/user/availability/:id"
 router.route("/availability/:id")
     .get(userController.getHostAvailability)
+
+//matches with"/api/user/emailsender"
+router.route("/emailsender")
+.post(userController.nodemailerMailBox)
+
 module.exports = router;

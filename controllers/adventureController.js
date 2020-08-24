@@ -29,6 +29,7 @@ module.exports = {
         db.Adventure
             .findById(req.params.id)
             .populate('hostId', `tags`)
+            .populate('tags', 'tagName')
             .then(dbModel => res.json(dbModel))
             .catch(err => res.status(422).json(err));
     },
@@ -48,7 +49,8 @@ module.exports = {
                 db.Community.create({
                     targetId: dbModel.hostId,
                     action: "newAdventure",
-                    adventureId: dbModel._id
+                    adventureId: dbModel._id,
+                    postImageUrl: dbModel.adventureImageUrl
                 }).then(() => {
                     res.status(204).end();
                 }).catch(err => res.status(500).json(err));
@@ -68,5 +70,8 @@ module.exports = {
             .then(dbModel => dbModel.remove())
             .then(dbModel => res.json(dbModel))
             .catch(err => res.status(422).json(err));
+        db.Community.deleteOne({ adventureId: req.params.id })
+            .then(() => res.status(204).end())
+            .catch(err => res.status(500).json(err));
     }
 }
