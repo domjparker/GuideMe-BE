@@ -24,7 +24,10 @@ module.exports = {
             firstName: req.body.firstName,
             lastName: req.body.lastName,
             email: req.body.email,
-            password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null)
+            password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null),
+            profilePictureUrl: "https://images.pexels.com/photos/1761282/pexels-photo-1761282.jpeg?cs=srgb&dl=pexels-jake-colvin-1761282.jpg&fm=jpg",
+            profileBannerUrl: "https://images.pexels.com/photos/38136/pexels-photo-38136.jpeg?cs=srgb&dl=pexels-veeterzy-38136.jpg&fm=jpg"
+
 
             //-------NODEMAILER-------//
         }).then(function (newUser) {
@@ -54,7 +57,8 @@ module.exports = {
             db.Community.create({
                 targetId: newUser._id,
                 action: "newUser",
-                adventureId: null
+                adventureId: null,
+                postImageUrl: null
             }).then(() => {
                 res.status(204).end();
             }).catch(err => res.status(500).json(err));
@@ -196,6 +200,9 @@ module.exports = {
         db.Adventure.deleteMany({ hostId: req.session.user.id })
             .then(() => console.log("deleted"))
             .catch(err => res.status(422).json(err));
+        db.Community.deleteMany({ targetId: req.session.user.id })
+            .then(() => res.status(204).end())
+            .catch(err => res.status(500).json(err));
     },
 };
 
