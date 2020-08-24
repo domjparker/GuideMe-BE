@@ -12,12 +12,14 @@ module.exports = {
     },
     create: function (req, res) {
         db.Review
-            .create(
-                {body: req.body.body,
-                title: req.body.title,    
+            .create({
+                body: req.body.body,
+                title: req.body.title,
                 userId: req.session.user.id,
-                adventureId: req.body.adventureId}
-                )
+                adventureId: req.body.adventureId,
+                rating: req.body.rating
+            }
+            )
             .then(dbModel => {
                 res.json(dbModel)
             })
