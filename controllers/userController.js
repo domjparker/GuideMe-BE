@@ -1,6 +1,8 @@
 const db = require("../models")
 const bcrypt = require("bcrypt");
 const { User } = require("../models");
+const nodemailer = require('nodemailer')
+const creds = require('../config');
 
 module.exports = {
     // get request to get user info by _id
@@ -23,6 +25,33 @@ module.exports = {
             lastName: req.body.lastName,
             email: req.body.email,
             password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null)
+
+            //-------NODEMAILER-------//
+        }).then(function(newUser){
+            if(req.body.email) {
+                var transporter = nodemailer.createTransport({
+                    service:'gmail',
+                    auth:{
+                        user:creds.USER,
+                        pass:creds.PASS
+
+                    }
+                });
+                var mailOptions = {
+                    from:'guideme2020app@gmail.com',
+                    to:`${req.body.email}`,
+                    subject:`Welcome to GuideMe, ${newUser.firstName}`,
+                    text:`Thank you for signing up. Start exploring today at https://guidemedimma.herokuapp.com/`
+                };
+                transporter.sendMail(mailOptions, function(error, info){
+                    if(error) {
+                        console.log(error);
+                    } else { 
+                        console.log(`Email sent`)
+                    }
+                });
+            }
+            //New user added to community
         }).then(dbModel => {
             res.json(dbModel)
             db.Community.create({
