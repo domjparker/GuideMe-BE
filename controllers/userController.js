@@ -131,6 +131,14 @@ module.exports = {
             .then(dbModel => res.json(dbModel))
             .catch(err => res.status(500).json(err));
     },
+    updateAvailabilityBooking: function (req, res) {
+        db.User.findOneAndUpdate({ _id: req.body.id }, {
+            availability: req.body.availability
+        })
+            .populate('availability')
+            .then(dbModel => res.json(dbModel))
+            .catch(err => res.status(500).json(err));
+    },
     // delete request to delete user's profile
     remove: function (req, res) {
         db.User.findById({ _id: req.session.user.id })
