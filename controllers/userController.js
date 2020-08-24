@@ -1,6 +1,8 @@
 const db = require("../models")
 const bcrypt = require("bcrypt");
 const { User } = require("../models");
+const nodemailer = require('nodemailer')
+const creds = require('../config');
 
 module.exports = {
     // get request to get user info by _id
@@ -16,17 +18,79 @@ module.exports = {
             .then(dbModel => res.json(dbModel))
             .catch(err => res.status(500).json(err));
     },
-    // post request to create a user upon signup
+    // post request to create a user upon signup + add new user to community db
     signup: function async(req, res) {
         db.User.create({
             firstName: req.body.firstName,
             lastName: req.body.lastName,
             email: req.body.email,
-            password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null)
-        }).then(dbModel => {
-            res.json(dbModel)
-            res.status(204).end();
+            password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null),
+            profilePictureUrl: "https://images.pexels.com/photos/1761282/pexels-photo-1761282.jpeg?cs=srgb&dl=pexels-jake-colvin-1761282.jpg&fm=jpg",
+            profileBannerUrl: "https://images.pexels.com/photos/38136/pexels-photo-38136.jpeg?cs=srgb&dl=pexels-veeterzy-38136.jpg&fm=jpg"
+
+
+            //-------NODEMAILER-------//
+        }).then(function (newUser) {
+            if (req.body.email) {
+                var transporter = nodemailer.createTransport({
+                    service: 'gmail',
+                    auth: {
+                        user: creds.USER,
+                        pass: creds.PASS
+
+                    }
+                });
+                var mailOptions = {
+                    from: 'guideme2020app@gmail.com',
+                    to: `${req.body.email}`,
+                    subject: `Welcome to GuideMe, ${newUser.firstName}`,
+                    text: `Thank you for signing up. Start exploring today at https://guidemedimma.herokuapp.com/`
+                };
+                transporter.sendMail(mailOptions, function (error, info) {
+                    if (error) {
+                        console.log(error);
+                    } else {
+                        console.log(`Email sent`)
+                    }
+                });
+            }
+            db.Community.create({
+                targetId: newUser._id,
+                action: "newUser",
+                adventureId: null,
+                postImageUrl: null
+            }).then(() => {
+                res.status(204).end();
+            }).catch(err => res.status(500).json(err));
+            //New user added to community 
         }).catch(err => res.status(500).json(err));
+    },
+
+    nodemailerMailBox: function (req, res) {
+        if (req.body.email) {
+            var transporter = nodemailer.createTransport({
+                service: 'gmail',
+                auth: {
+                    user: creds.USER,
+                    pass: creds.PASS
+
+                }
+            });
+            var mailOptions = {
+                from: 'guideme2020app@gmail.com',
+                to: `${req.body.email}`,
+                subject: `New message from: ${req.session.user.firstName}`,
+                text: `${req.session.user.firstName} sent you ${req.body.messageText}, log in at https://guidemedimma.herokuapp.com/ to respond. `
+            };
+            transporter.sendMail(mailOptions, function (error, info) {
+                if (error) {
+                    console.log(error);
+                } else {
+                    console.log(`Email sent`)
+                }
+            });
+        }
+
     },
 
     //post request to log user into account, or deny if login unsuccessful
@@ -40,6 +104,8 @@ module.exports = {
                 if (bcrypt, bcrypt.compareSync(req.body.password, data.password)) {
                     req.session.user = {
                         id: data._id,
+                        firstName: data.firstName,
+                        lastName: data.lastName,
                         email: data.email
                     }
                     console.log(req.session)
@@ -60,7 +126,7 @@ module.exports = {
         console.log(req.session)
         console.log("THIS IS SESSION")
         req.session.destroy()
-       res.send("User is logged out")
+        res.send("User is logged out")
 
     },
 
@@ -96,12 +162,12 @@ module.exports = {
     },
     // updates mailbox for both sender and recipient
     updateMailbox: function (req, res) {
-            db.User.findOneAndUpdate({ _id: req.session.user.id}, { $push: { mailbox: {converser: req.body.converser}} })
+        db.User.findOneAndUpdate({ _id: req.session.user.id }, { $push: { mailbox: { converser: req.body.converser } } })
             .then(dbModel => res.json(dbModel))
             .catch(err => res.status(422).json(err));
-            db.User.findOneAndUpdate({ _id: req.body.converser}, { $push: { mailbox: {converser: req.session.user.id}} })
+        db.User.findOneAndUpdate({ _id: req.body.converser }, { $push: { mailbox: { converser: req.session.user.id } } })
             .then(dbModel => res.json(dbModel))
-            .catch(err => res.status(422).json(err));  
+            .catch(err => res.status(422).json(err));
     },
     //Gets availability array
     getHostAvailability: function (req, res) {
@@ -111,14 +177,16 @@ module.exports = {
             .catch(err => res.status(500).json(err));
     },
     getAvailability: function (req, res) {
-        db.User.findOne({ _id: req.session.id })
+        db.User.findOne({ _id: req.session.user.id })
             .populate('availability')
             .then(dbModel => res.json(dbModel))
             .catch(err => res.status(500).json(err));
     },
     // Update availability array
     updateAvailability: function (req, res) {
-        db.User.findOneAndUpdate({ _id: req.session.id }, {availability: req.body.availability})
+        db.User.findOneAndUpdate({ _id: req.session.user.id }, {
+            availability: req.body.availability
+        })
             .populate('availability')
             .then(dbModel => res.json(dbModel))
             .catch(err => res.status(500).json(err));
@@ -130,8 +198,11 @@ module.exports = {
             .then(dbModel => res.json(dbModel))
             .catch(err => res.status(422).json(err));
         db.Adventure.deleteMany({ hostId: req.session.user.id })
-            .then(()=> console.log("deleted"))
+            .then(() => console.log("deleted"))
             .catch(err => res.status(422).json(err));
+        db.Community.deleteMany({ targetId: req.session.user.id })
+            .then(() => res.status(204).end())
+            .catch(err => res.status(500).json(err));
     },
 };
 
