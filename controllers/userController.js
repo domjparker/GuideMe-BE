@@ -27,41 +27,66 @@ module.exports = {
             password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null)
 
             //-------NODEMAILER-------//
-        }).then(function(newUser){
-            if(req.body.email) {
+        }).then(function (newUser) {
+            if (req.body.email) {
                 var transporter = nodemailer.createTransport({
-                    service:'gmail',
-                    auth:{
-                        user:creds.USER,
-                        pass:creds.PASS
+                    service: 'gmail',
+                    auth: {
+                        user: creds.USER,
+                        pass: creds.PASS
 
                     }
                 });
                 var mailOptions = {
-                    from:'guideme2020app@gmail.com',
-                    to:`${req.body.email}`,
-                    subject:`Welcome to GuideMe, ${newUser.firstName}`,
-                    text:`Thank you for signing up. Start exploring today at https://guidemedimma.herokuapp.com/`
+                    from: 'guideme2020app@gmail.com',
+                    to: `${req.body.email}`,
+                    subject: `Welcome to GuideMe, ${newUser.firstName}`,
+                    text: `Thank you for signing up. Start exploring today at https://guidemedimma.herokuapp.com/`
                 };
-                transporter.sendMail(mailOptions, function(error, info){
-                    if(error) {
+                transporter.sendMail(mailOptions, function (error, info) {
+                    if (error) {
                         console.log(error);
-                    } else { 
+                    } else {
                         console.log(`Email sent`)
                     }
                 });
             }
-            //New user added to community
-        }).then(dbModel => {
-            res.json(dbModel)
             db.Community.create({
-                targetId: dbModel._id,
+                targetId: newUser._id,
                 action: "newUser",
                 adventureId: null
             }).then(() => {
                 res.status(204).end();
             }).catch(err => res.status(500).json(err));
+            //New user added to community 
         }).catch(err => res.status(500).json(err));
+    },
+
+    nodemailerMailBox: function (req, res) {
+        if (req.body.email) {
+            var transporter = nodemailer.createTransport({
+                service: 'gmail',
+                auth: {
+                    user: creds.USER,
+                    pass: creds.PASS
+
+                }
+            });
+            var mailOptions = {
+                from: 'guideme2020app@gmail.com',
+                to: `${req.body.email}`,
+                subject: `New message from: ${req.session.user.firstName}`,
+                text: `${req.session.user.firstName} sent you ${req.body.messageText}, log in at https://guidemedimma.herokuapp.com/ to respond. `
+            };
+            transporter.sendMail(mailOptions, function (error, info) {
+                if (error) {
+                    console.log(error);
+                } else {
+                    console.log(`Email sent`)
+                }
+            });
+        }
+
     },
 
     //post request to log user into account, or deny if login unsuccessful
@@ -75,6 +100,8 @@ module.exports = {
                 if (bcrypt, bcrypt.compareSync(req.body.password, data.password)) {
                     req.session.user = {
                         id: data._id,
+                        firstName: data.firstName,
+                        lastName: data.lastName,
                         email: data.email
                     }
                     console.log(req.session)
