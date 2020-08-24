@@ -7,6 +7,7 @@ module.exports = {
                 adventureId: req.params.id
             })
             .populate('userId')
+            .populate('adventureId')
             .then(dbModel => res.json(dbModel))
             .catch(err => res.status(422).json(err));
     },

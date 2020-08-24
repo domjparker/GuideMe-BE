@@ -14,14 +14,10 @@ router.use("/adventure", adventureRoutes);
 router.use("/user", userRoutes);
 router.use("/message", messageRoutes);
 router.use("/tag", tagRoutes);
-<<<<<<< HEAD
 router.use("/booking", bookingRoutes);
 router.use("/review", reviewRoutes);
-=======
 router.use("/community", communityRoutes);
 
-router.use("/booking", bookingRoutes)
->>>>>>> Dev
 
 
 module.exports = router;
