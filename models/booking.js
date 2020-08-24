@@ -12,7 +12,7 @@ const bookingSchema = new Schema({
         ref: "Adventure",
         required:true
     },
-    guestNumber:{type:Number, required:true},
+    // guestNumber:{type:Number, required:true},
     startTime:{type:Date, required:true},
     completionStatus:{type:Boolean, default:false},
     transactionId:{type:Number}
