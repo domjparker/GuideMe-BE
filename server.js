@@ -6,7 +6,7 @@ const session = require("express-session")
 const logger = require("morgan");
 const mongoose = require("mongoose");
 const routes = require("./routes");
-const creds = require('../config');
+const creds = require('./config');
 // const { MemoryStore } = require("express-session");
 
 // Express App Setup
