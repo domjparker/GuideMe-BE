@@ -49,7 +49,8 @@ module.exports = {
                 db.Community.create({
                     targetId: dbModel.hostId,
                     action: "newAdventure",
-                    adventureId: dbModel._id
+                    adventureId: dbModel._id,
+                    postImageUrl: dbModel.adventureImageUrl
                 }).then(() => {
                     res.status(204).end();
                 }).catch(err => res.status(500).json(err));
