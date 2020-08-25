@@ -6,6 +6,7 @@ const session = require("express-session")
 const logger = require("morgan");
 const mongoose = require("mongoose");
 const routes = require("./routes");
+const creds = require('./config');
 // const { MemoryStore } = require("express-session");
 
 // Express App Setup
@@ -25,7 +26,7 @@ app.use(cors({
 
 // Session Setup
 app.use(session({
-  secret: "dimma stealth",
+  secret: creds.SESSIONSECRET,
   resave: false,
   saveUninitialized: false,
   proxy:true,

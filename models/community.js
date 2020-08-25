@@ -4,10 +4,12 @@ const Schema = mongoose.Schema;
 const communitySchema = new Schema({
     targetId:{
         type: Schema.Types.ObjectId,
-        ref: "User"
+        ref: "User",
+        required: true
       },
     action:{
-        type: String
+        type: String,
+        required: true
     },
     adventureId:{
         type: Schema.Types.ObjectId,

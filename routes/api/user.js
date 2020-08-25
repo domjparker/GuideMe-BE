@@ -21,7 +21,7 @@ router.route("/profile/")
     .delete(userController.remove);
 // matches with "/api/usernod/profile"
 router.route("/profile/:id")
-.get(userController.findUserById)
+    .get(userController.findUserById)
 
 // matches with "/api/user/profile/picture"
 router.route("/profile/picture")
@@ -31,7 +31,7 @@ router.route("/profile/picture")
 router.route("/profile/banner")
     .put(userController.updateBanner)
 
-    // matches with "/api/user/getSession"
+// matches with "/api/user/getSession"
 router.route("/getSession")
     .get(userController.getSession);
 
@@ -43,7 +43,15 @@ router.route("/mailbox")
 router.route("/availability")
     .get(userController.getAvailability)
     .put(userController.updateAvailability)
+// matches with "/api/user/availability/booking"
+router.route("/availability/booking")
+    .put(userController.updateAvailabilityBooking)
 // matches with "/api/user/availability/:id"
 router.route("/availability/:id")
     .get(userController.getHostAvailability)
+
+//matches with"/api/user/emailsender"
+router.route("/emailsender")
+.post(userController.nodemailerMailBox)
+
 module.exports = router;

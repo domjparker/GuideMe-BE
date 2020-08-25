@@ -17,7 +17,7 @@ const userSeed = [
       "password": "password",
       "bio": "fearless explorer",
       "location":"Global",
-      "veriifed":"false",
+      "verifed":"false",
       "host": "false",
       "hostedAdventures": [],
       "completedAdventures": [],
