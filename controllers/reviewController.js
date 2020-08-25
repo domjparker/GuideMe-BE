@@ -23,8 +23,18 @@ module.exports = {
             )
             .then(dbModel => {
                 res.json(dbModel)
+                db.Community.create({
+                    targetId: dbModel.userId,
+                    action: "newReview",
+                    adventureId: dbModel.adventureId,
+                    postImageUrl: null,
+                    postText: dbModel.body
+                }).then(() => {
+                    res.status(204).end();
+                }).catch(err => res.status(500).json(err));
             })
             .catch(err => res.status(422).json(err));
+
     },
     remove: function (req, res) {
         db.Review
