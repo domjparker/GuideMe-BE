@@ -18,11 +18,13 @@ module.exports = {
                 title: req.body.title,
                 userId: req.session.user.id,
                 adventureId: req.body.adventureId,
-                rating: req.body.rating
+                rating: req.body.rating,
+                hostId: req.body.hostId
             }
             )
             .then(dbModel => {
                 res.json(dbModel)
+                console.log('new review added', dbModel)
                 db.Community.create({
                     targetId: dbModel.userId,
                     action: "newReview",
