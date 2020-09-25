@@ -209,6 +209,9 @@ module.exports = {
         db.Community.deleteMany({ targetId: req.session.user.id })
             .then(() => res.status(204).end())
             .catch(err => res.status(500).json(err));
+        db.Review.deleteMany({ hostId: req.session.user.id })
+            .then(() => res.status(204).end())
+            .catch(err => res.status(500).json(err));   
     }
 
 };
