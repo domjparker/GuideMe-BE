@@ -70,7 +70,7 @@ module.exports = {
             .then(dbModel => dbModel.remove())
             .then(dbModel => res.json(dbModel))
             .catch(err => res.status(422).json(err));
-        db.Community.deleteOne({ adventureId: req.params.id })
+        db.Community.deleteMany({ adventureId: req.params.id })
             .then(() => res.status(204).end())
             .catch(err => res.status(500).json(err));
     }
