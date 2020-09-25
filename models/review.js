@@ -12,6 +12,10 @@ const reviewSchema = new Schema({
         ref: "Adventure",
         required: true
     },
+    hostId:{
+        type: String,
+        required: true
+    },
     title:{
         type: String,
         required: true
