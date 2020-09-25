@@ -73,5 +73,8 @@ module.exports = {
         db.Community.deleteMany({ adventureId: req.params.id })
             .then(() => res.status(204).end())
             .catch(err => res.status(500).json(err));
+        db.Review.deleteMany({ adventureId: req.params.id })
+            .then(() => res.status(204).end())
+            .catch(err => res.status(500).json(err));
     }
 }
