@@ -1,5 +1,5 @@
 module.exports = {
     USER: 'guideme2020app@gmail.com', 
-    PASS: 'GuideMeAppDIMMA$',
+    PASS: 'GuideMe2020!',
     SESSIONSECRET: "secret DIMMA stealth"
 }
